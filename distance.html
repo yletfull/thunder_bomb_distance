@@ -9,11 +9,11 @@
   <h1>Расчет дальности полета</h1>
   
   <div class="tabs">
-    <button class="tab" id="distanceTab">Получить дальность по скорости/высоте</button>
-    <button class="tab" id="speedAltitudeTab">Получить скорость и высоту по дальности</button>
+    <button class="tablink active" onclick="openTab('distanceTab', this)">Получить дальность по скорости/высоте</button>
+    <button class="tablink" onclick="openTab('speedAltitudeTab', this)">Получить скорость и высоту по дальности</button>
   </div>
   
-  <div id="contentDistance" class="tab-content">
+  <div id="distanceTab" class="tabcontent">
     <label for="speedInput">Скорость (км/ч):</label>
     <input type="number" id="speedInput" value="800" placeholder="Введите скорость" />
     
@@ -34,20 +34,24 @@
       </thead>
       <tbody></tbody>
     </table>
-    
+
     <canvas id="chart"></canvas>
   </div>
   
-  <div id="contentSpeedAltitude" class="tab-content">
+  <div id="speedAltitudeTab" class="tabcontent">
     <label for="distanceInput">Дистанция (метры):</label>
     <input type="number" id="distanceInput" placeholder="Введите дистанцию" />
     
     <button id="calculateSpeedAltitudeBtn">Рассчитать скорость и высоту</button>
     
-    <div id="speedOutput"></div>
-    <div id="altitudeOutput"></div>
+    <div id="resultOutput">
+      <div>Скорость: <span id="speedOutput"></span> км/ч</div>
+      <div>Высота: <span id="altitudeOutput"></span> метров</div>
+    </div>
   </div>
-  
+
   <script src="script.js"></script>
+  <script src="script-distance.js"></script>
+  <script src="script-speed-altitude.js"></script>
 </body>
 </html>
