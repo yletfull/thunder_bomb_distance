@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  input[type="number"] {
+    padding: 5px;
+    width: 200px;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  #distanceOutput {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+
+
+  #tableOutput {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #tableOutput th,
+  #tableOutput td {
+    padding: 5px 10px;
+    border: 1px solid #000;
+  }
+  
+  #tableOutput .highlight {
+    background-color: green;
+    color: white;
+  }
