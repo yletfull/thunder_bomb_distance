@@ -105,8 +105,8 @@ function calculateSpeedAltitude() {
   let chartData = [];
   let prevAltitude = minAltitude;
 
-  let minY = Infinity;
-  let maxY = -Infinity;
+  let minX = Infinity;
+  let maxX = -Infinity;
 
   for (let currentSpeed = minSpeed; currentSpeed <= maxSpeed; currentSpeed += epsilon) {
     let currentAltitude = calculateAltitude(distance, currentSpeed, launchAngleRadians);
@@ -114,8 +114,8 @@ function calculateSpeedAltitude() {
     if (Math.abs(currentAltitude - prevAltitude) >= 50) {
       chartData.push({ x: currentAltitude, y: currentSpeed });
       prevAltitude = currentAltitude;
-      minY = Math.min(minY, currentSpeed);
-      maxY = Math.max(maxY, currentSpeed);
+      minX = Math.min(minY, currentSpeed);
+      maxX = Math.max(maxY, currentSpeed);
     }
   }
 
@@ -125,10 +125,10 @@ function calculateSpeedAltitude() {
     window.chartInstance.destroy();
   }
 
-  let minX = chartData.reduce((min, dataPoint) => Math.min(min, dataPoint.x), Infinity);
-  let maxX = chartData.reduce((max, dataPoint) => Math.max(max, dataPoint.x), -Infinity);
-  let minYAxis = minY - 100;
-  let maxYAxis = maxY + 100; 
+  let minY = chartData.reduce((min, dataPoint) => Math.min(min, dataPoint.x), Infinity);
+  let maxY = chartData.reduce((max, dataPoint) => Math.max(max, dataPoint.x), -Infinity);
+  let minXAxis = minY - 100;
+  let maxXAxis = maxY + 100; 
 
   // Загрузка изображения бомбы
   let bombImage = new Image();
@@ -154,27 +154,27 @@ function calculateSpeedAltitude() {
           x: {
             title: {
               display: true,
-              text: 'Высота (метры)'
+              text: 'Скорость (км/ч)' // Изменен текст оси X
             },
             type: 'linear',
             position: 'bottom',
-            min: minX - 1000,  // Установка начального значения оси x с учетом отступа
-            max: maxX + 1000,  // Установка конечного значения оси x с учетом отступа
+            min: minXAxis,
+            max: maxXAxis,
             ticks: {
-              stepSize: 1000
+              stepSize: 100
             }
           },
           y: {
             title: {
               display: true,
-              text: 'Скорость (км/ч)'
+              text: 'Высота (метры)' // Изменен текст оси Y
             },
             type: 'linear',
             position: 'left',
-            min: minYAxis,
-            max: maxYAxis,
+            min: minY - 1000,  // Установка начального значения оси Y с учетом отступа
+            max: maxY + 1000,  // Установка конечного значения оси Y с учетом отступа
             ticks: {
-              stepSize: 100
+              stepSize: 1000
             }
           }
         }
