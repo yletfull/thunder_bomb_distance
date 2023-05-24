@@ -9,7 +9,6 @@ function calculateSpeedAltitude() {
   let altitudeOutput = document.getElementById('altitudeOutput');
   let chartCanvas = document.getElementById('chartAltitude');
 
-
   let distance = parseFloat(distanceInput.value);
 
   // Заданные диапазоны скорости и высоты
@@ -88,7 +87,6 @@ function calculateSpeedAltitude() {
     }
   }
 
-
   let ctx = chartCanvas.getContext('2d');
 
   if (window.chartInstance) {
@@ -100,49 +98,57 @@ function calculateSpeedAltitude() {
   let minYAxis = minY - 100;
   let maxYAxis = maxY + 100; 
 
-  window.chartInstance = new Chart(ctx, {
-    type: 'scatter',
-    data: {
-      datasets: [{
-        label: 'График скорости-высоты',
-        data: chartData,
-        backgroundColor: 'rgba(54, 162, 235, 1)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        pointRadius: 3,
-        pointHoverRadius: 5,
-      }]
-    },
-    options: {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Высота (метры)'
+  // Загрузка изображения бомбы
+  let bombImage = new Image();
+  bombImage.src = './assets/bomb.svg';
+
+  bombImage.onload = function() {
+    // Создание графика с использованием изображения бомбы
+    window.chartInstance = new Chart(ctx, {
+      type: 'scatter',
+      data: {
+        datasets: [{
+          label: 'График скорости-высоты',
+          data: chartData,
+          backgroundColor: 'rgba(54, 162, 235, 1)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          pointStyle: bombImage,
+          pointRadius: 15,
+          pointHoverRadius: 15,
+        }]
+      },
+      options: {
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Высота (метры)'
+            },
+            type: 'linear',
+            position: 'bottom',
+            min: minX - 1000,  // Установка начального значения оси x с учетом отступа
+            max: maxX + 1000,  // Установка конечного значения оси x с учетом отступа
+            ticks: {
+              stepSize: 1000
+            }
           },
-          type: 'linear',
-          position: 'bottom',
-          min: minX - 1000,  // Установка начального значения оси x с учетом отступа
-          max: maxX + 1000,  // Установка конечного значения оси x с учетом отступа
-          ticks: {
-            stepSize: 1000
-          }
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'Скорость (км/ч)'
-          },
-          type: 'linear',
-          position: 'left',
-          min: minYAxis,
-          max: maxYAxis,
-          ticks: {
-            stepSize: 100
+          y: {
+            title: {
+              display: true,
+              text: 'Скорость (км/ч)'
+            },
+            type: 'linear',
+            position: 'left',
+            min: minYAxis,
+            max: maxYAxis,
+            ticks: {
+              stepSize: 100
+            }
           }
         }
       }
-    }
-  });
+    });
+  };
 }
 
 function calculateDistance(speed, altitude) {
