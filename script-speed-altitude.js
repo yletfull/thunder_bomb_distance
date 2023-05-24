@@ -11,8 +11,32 @@ function calculateSpeedAltitude() {
   let launchAngleInput = document.getElementById('launchAngleInput');
 
   let distance = parseFloat(distanceInput.value);
+  let resistanceCoefficient = 1.0;
   let launchAngle = parseFloat(launchAngleInput.value);
   let launchAngleRadians = launchAngle * (Math.PI / 180);
+  let bomb = document.getElementById('bombSelect').value;
+  let bombCoefficientA = coefficientA;
+  let bombCoefficientB = coefficientB;
+
+  // Установка коэффициентов для выбранной бомбы
+  if (bomb === 'gbu-10') {
+    bombCoefficientA = 2.0;
+    bombCoefficientB = 2.5;
+  } else if (bomb === 'gbu-12') {
+    bombCoefficientA = 1.5;
+    bombCoefficientB = 2.0;
+  } else if (bomb === 'gbu-16') {
+    bombCoefficientA = 1.2;
+    bombCoefficientB = 1.8;
+  }
+
+  if (bomb === 'gbu-10') {
+    resistanceCoefficient = 0.8;
+  } else if (bomb === 'gbu-12') {
+    resistanceCoefficient = 0.9;
+  } else if (bomb === 'gbu-16') {
+    resistanceCoefficient = 1.0;
+  }
 
   // Заданные диапазоны скорости и высоты
   let minSpeed = 500;
@@ -160,7 +184,7 @@ function calculateDistance(speed, altitude, launchAngleRadians) {
   let coefficientB = 2.0;
 
   // Формула для расчета дальности с учетом угла пуска
-  let distance = (coefficientA * speed + coefficientB * altitude) * Math.cos(launchAngleRadians);
+  let distance = (coefficientA * speed + coefficientB * altitude * resistanceCoefficient) * Math.cos(launchAngleRadians);
 
   return distance;
 }

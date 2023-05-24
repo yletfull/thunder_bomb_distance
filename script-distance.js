@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let bombCoefficientA = coefficientA;
     let bombCoefficientB = coefficientB;
 
+    let resistanceCoefficient = 1.0; // Коэффициент сопротивления воздуха по умолчанию
+
     // Установка коэффициентов для выбранной бомбы
     if (bomb === 'gbu-10') {
       bombCoefficientA = 2.0;
@@ -36,6 +38,14 @@ document.addEventListener('DOMContentLoaded', function() {
       bombCoefficientB = 1.8;
     }
 
+    // Учет коэффициента сопротивления воздуха для каждой бомбы
+    if (bomb === 'gbu-10') {
+      resistanceCoefficient = 0.8;
+    } else if (bomb === 'gbu-12') {
+      resistanceCoefficient = 0.9;
+    } else if (bomb === 'gbu-16') {
+      resistanceCoefficient = 1.0;
+    }
     // Расчет и вывод таблицы для диапазона скоростей
     tableOutput.innerHTML = '';
 
@@ -74,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Создание графика
     let chartData = [];
     for (let currentSpeed = startSpeed; currentSpeed <= endSpeed; currentSpeed += 50) {
-      let distance = (bombCoefficientA * currentSpeed + bombCoefficientB * altitude) * Math.cos(launchAngleRadians);
+      let distance = (bombCoefficientA * currentSpeed + bombCoefficientB * altitude * resistanceCoefficient) * Math.cos(launchAngleRadians);
       chartData.push({ x: distance, y: currentSpeed });
     }
 
