@@ -98,6 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Загрузка изображения бомбы
     let bombImage = new Image();
     bombImage.src = './assets/bomb.svg';
+    bombImage.width = 75; 
+    bombImage.height = 75;
 
     bombImage.onload = function() {
       // Создание графика с использованием изображения бомбы

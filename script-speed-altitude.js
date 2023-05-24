@@ -122,8 +122,11 @@ function calculateSpeedAltitude() {
 
   // Загрузка изображения бомбы
   let bombImage = new Image();
+
+  // Модификация для уменьшения размера изображения бомбы
   bombImage.src = './assets/bomb.svg';
-  bombImage.trans = 'transform: scale(12)';
+  bombImage.width = 75;
+  bombImage.height = 75;
 
   bombImage.onload = function() {
     // Создание графика с использованием изображения бомбы
@@ -131,7 +134,7 @@ function calculateSpeedAltitude() {
       type: 'scatter',
       data: {
         datasets: [{
-          label: 'График скорости-высоты',
+          label: 'График достижения дистанции (точка характеризует совокупность необходимой скорости и высоты)',
           data: chartData,
           backgroundColor: 'rgba(54, 162, 235, 1)',
           borderColor: 'rgba(54, 162, 235, 1)',

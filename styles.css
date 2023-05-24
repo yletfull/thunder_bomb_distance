@@ -43,6 +43,10 @@
   .tabcontent {
     display: none;
   }
+
+  #resultOutput {
+    margin: 1rem 0;
+  }
   
   .tabcontent.active {
     display: block;
