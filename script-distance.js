@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
   calculateDistanceBtn.addEventListener('click', calculateDistance);
 
   function calculateDistance() {
+    let launchAngleInput = document.getElementById('launchAngleInput');
+    let launchAngle = parseFloat(launchAngleInput.value);
+    let launchAngleRadians = launchAngle * (Math.PI / 180);
+
     let speedInput = document.getElementById('speedInput');
     let altitudeInput = document.getElementById('altitudeInput');
     let tableOutput = document.getElementById('tableOutput').getElementsByTagName('tbody')[0];
@@ -11,9 +15,26 @@ document.addEventListener('DOMContentLoaded', function() {
     let speed = parseFloat(speedInput.value);
     let altitude = parseFloat(altitudeInput.value);
 
-    // Коэффициенты для расчета дальности
+    // Коэффициенты для расчета дальности в зависимости от выбранной бомбы
     let coefficientA = 1.5;
     let coefficientB = 2.0;
+
+    // Переменные для хранения значений вариаций бомб
+    let bomb = document.getElementById('bombSelect').value;
+    let bombCoefficientA = coefficientA;
+    let bombCoefficientB = coefficientB;
+
+    // Установка коэффициентов для выбранной бомбы
+    if (bomb === 'gbu-10') {
+      bombCoefficientA = 2.0;
+      bombCoefficientB = 2.5;
+    } else if (bomb === 'gbu-12') {
+      bombCoefficientA = 1.5;
+      bombCoefficientB = 2.0;
+    } else if (bomb === 'gbu-16') {
+      bombCoefficientA = 1.2;
+      bombCoefficientB = 1.8;
+    }
 
     // Расчет и вывод таблицы для диапазона скоростей
     tableOutput.innerHTML = '';
@@ -29,7 +50,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
       altitudeCell.textContent = altitude;
       speedCell.textContent = currentSpeed;
-      distanceCell.textContent = (coefficientA * currentSpeed + coefficientB * altitude).toFixed(2);
+  
+      console.log(
+        bombCoefficientA,
+        currentSpeed,
+        bombCoefficientB,
+        altitude,
+        Math.cos(launchAngleRadians)
+      )
+      distanceCell.textContent = (bombCoefficientA * currentSpeed + bombCoefficientB * altitude) * Math.cos(launchAngleRadians).toFixed(2);
 
       row.appendChild(altitudeCell);
       row.appendChild(speedCell);
@@ -45,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Создание графика
     let chartData = [];
     for (let currentSpeed = startSpeed; currentSpeed <= endSpeed; currentSpeed += 50) {
-      let distance = coefficientA * currentSpeed + coefficientB * altitude;
+      let distance = (bombCoefficientA * currentSpeed + bombCoefficientB * altitude) * Math.cos(launchAngleRadians);
       chartData.push({ x: distance, y: currentSpeed });
     }
 
@@ -66,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
         type: 'scatter',
         data: {
           datasets: [{
-            label: `График дальности полета при высоте ${altitudeInput.value} метров`,
+            label: `График дальности полета при высоте ${altitudeInput.value} метров (бомба: ${bomb})`,
             data: chartData,
             backgroundColor: 'rgba(54, 162, 235, 0.6)',
             borderColor: 'rgba(54, 162, 235, 1)',

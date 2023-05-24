@@ -8,8 +8,11 @@ function calculateSpeedAltitude() {
   let speedOutput = document.getElementById('speedOutput');
   let altitudeOutput = document.getElementById('altitudeOutput');
   let chartCanvas = document.getElementById('chartAltitude');
+  let launchAngleInput = document.getElementById('launchAngleInput');
 
   let distance = parseFloat(distanceInput.value);
+  let launchAngle = parseFloat(launchAngleInput.value);
+  let launchAngleRadians = launchAngle * (Math.PI / 180);
 
   // Заданные диапазоны скорости и высоты
   let minSpeed = 500;
@@ -31,7 +34,7 @@ function calculateSpeedAltitude() {
     while (minAltitude <= maxAltitude) {
       altitude = (minAltitude + maxAltitude) / 2;
 
-      let calculatedDistance = calculateDistance(speed, altitude);
+      let calculatedDistance = calculateDistance(speed, altitude, launchAngleRadians);
 
       if (Math.abs(calculatedDistance - distance) < epsilon) {
         found = true;
@@ -48,7 +51,7 @@ function calculateSpeedAltitude() {
 
     if (found) {
       break;
-    } else if (calculateDistance(speed, minAltitude) < distance) {
+    } else if (calculateDistance(speed, minAltitude, launchAngleRadians) < distance) {
       minSpeed = speed + epsilon;
     } else {
       maxSpeed = speed - epsilon;
@@ -77,7 +80,7 @@ function calculateSpeedAltitude() {
   let maxY = -Infinity;
 
   for (let currentSpeed = minSpeed; currentSpeed <= maxSpeed; currentSpeed += epsilon) {
-    let currentAltitude = calculateAltitude(distance, currentSpeed);
+    let currentAltitude = calculateAltitude(distance, currentSpeed, launchAngleRadians);
 
     if (Math.abs(currentAltitude - prevAltitude) >= 50) {
       chartData.push({ x: currentAltitude, y: currentSpeed });
@@ -151,24 +154,24 @@ function calculateSpeedAltitude() {
   };
 }
 
-function calculateDistance(speed, altitude) {
+function calculateDistance(speed, altitude, launchAngleRadians) {
   // Коэффициенты для расчета дальности
   let coefficientA = 1.5;
   let coefficientB = 2.0;
 
-  // Формула для расчета дальности
-  let distance = coefficientA * speed + coefficientB * altitude;
+  // Формула для расчета дальности с учетом угла пуска
+  let distance = (coefficientA * speed + coefficientB * altitude) * Math.cos(launchAngleRadians);
 
   return distance;
 }
 
-function calculateAltitude(distance, speed) {
+function calculateAltitude(distance, speed, launchAngleRadians) {
   // Коэффициенты для расчета высоты
   let coefficientA = 1.5;
   let coefficientB = 2.0;
 
-  // Формула для расчета высоты
-  let altitude = (distance - coefficientA * speed) / coefficientB;
+  // Формула для расчета высоты с учетом угла пуска
+  let altitude = (distance - coefficientA * speed * Math.cos(launchAngleRadians)) / (coefficientB * Math.cos(launchAngleRadians));
 
   return altitude;
 }
