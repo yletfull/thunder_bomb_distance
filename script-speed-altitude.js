@@ -15,6 +15,11 @@ function calculateSpeedAltitude() {
   let launchAngle = parseFloat(launchAngleInput.value);
   let launchAngleRadians = launchAngle * (Math.PI / 180);
   let bomb = document.getElementById('bombSelect').value;
+
+  // Коэффициенты для расчета дальности в зависимости от выбранной бомбы
+  let coefficientA = 1.5;
+  let coefficientB = 2.0;
+  
   let bombCoefficientA = coefficientA;
   let bombCoefficientB = coefficientB;
 
@@ -58,7 +63,7 @@ function calculateSpeedAltitude() {
     while (minAltitude <= maxAltitude) {
       altitude = (minAltitude + maxAltitude) / 2;
 
-      let calculatedDistance = calculateDistance(speed, altitude, launchAngleRadians);
+      let calculatedDistance = calculateDistance(speed, altitude, launchAngleRadians, resistanceCoefficient);
 
       if (Math.abs(calculatedDistance - distance) < epsilon) {
         found = true;
@@ -178,7 +183,7 @@ function calculateSpeedAltitude() {
   };
 }
 
-function calculateDistance(speed, altitude, launchAngleRadians) {
+function calculateDistance(speed, altitude, launchAngleRadians, resistanceCoefficient) {
   // Коэффициенты для расчета дальности
   let coefficientA = 1.5;
   let coefficientB = 2.0;
