@@ -8,30 +8,46 @@
 <body>
   <h1>Расчет дальности полета</h1>
   
-  <label for="speedInput">Скорость (км/ч):</label>
-  <input type="number" id="speedInput" value="800" placeholder="Введите скорость" />
+  <div class="tabs">
+    <button class="tab" id="distanceTab">Получить дальность по скорости/высоте</button>
+    <button class="tab" id="speedAltitudeTab">Получить скорость и высоту по дальности</button>
+  </div>
   
-  <label for="altitudeInput">Высота (метры):</label>
-  <input type="number" id="altitudeInput" placeholder="Введите высоту" value="3000"/>
+  <div id="contentDistance" class="tab-content">
+    <label for="speedInput">Скорость (км/ч):</label>
+    <input type="number" id="speedInput" value="800" placeholder="Введите скорость" />
+    
+    <label for="altitudeInput">Высота (метры):</label>
+    <input type="number" id="altitudeInput" placeholder="Введите высоту" value="3000"/>
+    
+    <button id="calculateBtn">Рассчитать дальность</button>
+    
+    <div id="distanceOutput"></div>
+    
+    <table id="tableOutput">
+      <thead>
+        <tr>
+          <th>Высота (метры)</th>
+          <th>Скорость (км/ч)</th>
+          <th>Дальность (метры)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    
+    <canvas id="chart"></canvas>
+  </div>
   
-  <button id="calculateBtn">Рассчитать дальность</button>
+  <div id="contentSpeedAltitude" class="tab-content">
+    <label for="distanceInput">Дистанция (метры):</label>
+    <input type="number" id="distanceInput" placeholder="Введите дистанцию" />
+    
+    <button id="calculateSpeedAltitudeBtn">Рассчитать скорость и высоту</button>
+    
+    <div id="speedOutput"></div>
+    <div id="altitudeOutput"></div>
+  </div>
   
-  <div id="distanceOutput"></div>
-  
-  <table id="tableOutput">
-    <thead>
-      <tr>
-        <th>Высота (метры)</th>
-        <th>Скорость (км/ч)</th>
-        <th>Дальность (метры)</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <canvas id="chart"></canvas>
-
-  <script src="chart.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

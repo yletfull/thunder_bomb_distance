@@ -7,6 +7,40 @@ body {
     color: #333;
   }
   
+  .tabs {
+    display: flex;
+  }
+  
+  .tab {
+    flex: 1;
+    padding: 10px 20px;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+  }
+  
+  .tab:hover {
+    background-color: #ccc;
+  }
+  
+  .tab.active {
+    background-color: #bbb;
+  }
+  
+  .tab-content {
+    display: none;
+  }
+  
+  #contentDistance {
+    display: block;
+  }
+  
+  #contentSpeedAltitude {
+    display: none;
+  }
+  
   label {
     display: block;
     margin-top: 10px;
@@ -32,13 +66,13 @@ body {
     background-color: #45a049;
   }
   
-  #distanceOutput {
+  #distanceOutput,
+  #speedOutput,
+  #altitudeOutput {
     margin-top: 20px;
     font-weight: bold;
   }
   
-
-
   #tableOutput {
     margin-top: 20px;
     border-collapse: collapse;
@@ -55,3 +89,4 @@ body {
     background-color: green;
     color: white;
   }
+  

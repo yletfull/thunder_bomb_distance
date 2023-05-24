@@ -1,6 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
+    let distanceTab = document.getElementById('distanceTab');
+    let speedAltitudeTab = document.getElementById('speedAltitudeTab');
+    
+    let contentDistance = document.getElementById('contentDistance');
+    let contentSpeedAltitude = document.getElementById('contentSpeedAltitude');
+    
+    distanceTab.addEventListener('click', function() {
+      distanceTab.classList.add('active');
+      speedAltitudeTab.classList.remove('active');
+      contentDistance.style.display = 'block';
+      contentSpeedAltitude.style.display = 'none';
+    });
+    
+    speedAltitudeTab.addEventListener('click', function() {
+      speedAltitudeTab.classList.add('active');
+      distanceTab.classList.remove('active');
+      contentSpeedAltitude.style.display = 'block';
+      contentDistance.style.display = 'none';
+    });
+    
     let calculateBtn = document.getElementById('calculateBtn');
     calculateBtn.addEventListener('click', calculateDistance);
+    
+    let calculateSpeedAltitudeBtn = document.getElementById('calculateSpeedAltitudeBtn');
+    calculateSpeedAltitudeBtn.addEventListener('click', calculateSpeedAltitude);
   });
   
   function calculateDistance() {
@@ -93,5 +116,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
     });
+  }
+  
+  function calculateSpeedAltitude() {
+    let distanceInput = document.getElementById('distanceInput');
+    let speedOutput = document.getElementById('speedOutput');
+    let altitudeOutput = document.getElementById('altitudeOutput');
+  
+    let distance = parseFloat(distanceInput.value);
+  
+    // Коэффициенты для расчета скорости и высоты
+    let coefficientA = 1.5;
+    let coefficientB = 2.0;
+  
+    // Формулы для расчета скорости и высоты
+    let speed = (distance - coefficientB * 3000) / coefficientA;
+    let altitude = (distance - coefficientA * 800) / coefficientB;
+  
+    // Вывод рассчитанной скорости и высоты
+    speedOutput.textContent = speed.toFixed(2);
+    altitudeOutput.textContent = altitude.toFixed(2);
   }
   
