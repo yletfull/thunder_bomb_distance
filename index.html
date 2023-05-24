@@ -12,6 +12,13 @@
     <button class="tablink active" onclick="openTab('distanceTab', this)">Получить дальность по скорости/высоте</button>
     <button class="tablink" onclick="openTab('speedAltitudeTab', this)">Получить скорость/высоту по дальности</button>
   </div>
+
+  <label for="bombSelect">Выберите бомбу:</label>
+  <select id="bombSelect" disabled>
+    <option value="gbu-10">GBU-10</option>
+    <option value="gbu-12" selected>GBU-12</option>
+    <option value="gbu-16">GBU-16</option>
+  </select>
   
   <div id="distanceTab" class="tabcontent">
     <label for="speedInput">Скорость (км/ч):</label>
