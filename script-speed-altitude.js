@@ -17,29 +17,19 @@ function calculateSpeedAltitude() {
   let bomb = document.getElementById('bombSelect').value;
 
   // Коэффициенты для расчета дальности в зависимости от выбранной бомбы
-  let coefficientA = 1.5;
-  let coefficientB = 2.0;
-  
-  let bombCoefficientA = coefficientA;
-  let bombCoefficientB = coefficientB;
 
   // Установка коэффициентов для выбранной бомбы
   if (bomb === 'gbu-10') {
-    bombCoefficientA = 2.0;
-    bombCoefficientB = 2.5;
-  } else if (bomb === 'gbu-12') {
-    bombCoefficientA = 1.5;
-    bombCoefficientB = 2.0;
-  } else if (bomb === 'gbu-16') {
-    bombCoefficientA = 1.2;
-    bombCoefficientB = 1.8;
-  }
-
-  if (bomb === 'gbu-10') {
+    coefficientA = 2.0;
+    coefficientB = 2.5;
     resistanceCoefficient = 0.8;
   } else if (bomb === 'gbu-12') {
+    coefficientA = 1.5;
+    coefficientB = 2.0;
     resistanceCoefficient = 0.9;
   } else if (bomb === 'gbu-16') {
+    coefficientA = 1.2;
+    coefficientB = 1.8;
     resistanceCoefficient = 1.0;
   }
 
@@ -112,10 +102,10 @@ function calculateSpeedAltitude() {
     let currentAltitude = calculateAltitude(distance, currentSpeed, launchAngleRadians);
 
     if (Math.abs(currentAltitude - prevAltitude) >= 50) {
-      chartData.push({ x: currentAltitude, y: currentSpeed });
+      chartData.push({ x: currentSpeed, y: currentAltitude });
       prevAltitude = currentAltitude;
-      minX = Math.min(minY, currentSpeed);
-      maxX = Math.max(maxY, currentSpeed);
+      minX = Math.min(minX, currentSpeed);
+      maxX = Math.max(maxX, currentSpeed);
     }
   }
 
@@ -125,14 +115,15 @@ function calculateSpeedAltitude() {
     window.chartInstance.destroy();
   }
 
-  let minY = chartData.reduce((min, dataPoint) => Math.min(min, dataPoint.x), Infinity);
-  let maxY = chartData.reduce((max, dataPoint) => Math.max(max, dataPoint.x), -Infinity);
-  let minXAxis = minY - 100;
-  let maxXAxis = maxY + 100; 
+  let minY = chartData.reduce((min, dataPoint) => Math.min(min, dataPoint.y), Infinity);
+  let maxY = chartData.reduce((max, dataPoint) => Math.max(max, dataPoint.y), -Infinity);
+  let minXAxis = minX - 100;
+  let maxXAxis = maxX + 100;
 
   // Загрузка изображения бомбы
   let bombImage = new Image();
   bombImage.src = './assets/bomb.svg';
+  bombImage.trans = 'transform: scale(12)';
 
   bombImage.onload = function() {
     // Создание графика с использованием изображения бомбы
@@ -154,7 +145,7 @@ function calculateSpeedAltitude() {
           x: {
             title: {
               display: true,
-              text: 'Скорость (км/ч)' // Изменен текст оси X
+              text: 'Скорость (км/ч)'
             },
             type: 'linear',
             position: 'bottom',
@@ -167,12 +158,12 @@ function calculateSpeedAltitude() {
           y: {
             title: {
               display: true,
-              text: 'Высота (метры)' // Изменен текст оси Y
+              text: 'Высота (метры)'
             },
             type: 'linear',
             position: 'left',
-            min: minY - 1000,  // Установка начального значения оси Y с учетом отступа
-            max: maxY + 1000,  // Установка конечного значения оси Y с учетом отступа
+            min: minY - 1000,  // Установка начального значения оси y с учетом отступа
+            max: maxY + 1000,  // Установка конечного значения оси y с учетом отступа
             ticks: {
               stepSize: 1000
             }
