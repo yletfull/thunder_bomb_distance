@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   let calculateDistanceBtn = document.getElementById('calculateBtn');
-  let calculateSpeedAltitudeBtn = document.getElementById('calculateSpeedAltitudeBtn');
 
   calculateDistanceBtn.addEventListener('click', calculateDistance);
-  calculateSpeedAltitudeBtn.addEventListener('click', calculateSpeedAltitude);
 
   function calculateDistance() {
     let speedInput = document.getElementById('speedInput');
@@ -58,40 +56,47 @@ document.addEventListener('DOMContentLoaded', function() {
       window.chartInstance.destroy();
     }
 
-    window.chartInstance = new Chart(ctx, {
-      type: 'scatter',
-      data: {
-        datasets: [{
-          label: `График дальности полета при высоте ${altitudeInput.value} метров`,
-          data: chartData,
-          backgroundColor: 'rgba(54, 162, 235, 0.6)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1,
-          pointRadius: 5,
-          pointHoverRadius: 8
-        }]
-      },
-      options: {
-        scales: {
-          x: {
-            type: 'linear',
-            position: 'bottom',
-            title: {
-              display: true,
-              text: 'Дистанция (метры)'
-            }
-          },
-          y: {
-            type: 'linear',
-            position: 'left',
-            title: {
-              display: true,
-              text: 'Начальная скорость (км/ч)'
+    // Загрузка изображения бомбы
+    let bombImage = new Image();
+    bombImage.src = './assets/bomb.svg';
+
+    bombImage.onload = function() {
+      // Создание графика с использованием изображения бомбы
+      window.chartInstance = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+          datasets: [{
+            label: `График дальности полета при высоте ${altitudeInput.value} метров`,
+            data: chartData,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+            pointStyle: bombImage,
+            pointRadius: 15,
+            pointHoverRadius: 15,
+          }]
+        },
+        options: {
+          scales: {
+            x: {
+              type: 'linear',
+              position: 'bottom',
+              title: {
+                display: true,
+                text: 'Дистанция (метры)'
+              }
+            },
+            y: {
+              type: 'linear',
+              position: 'left',
+              title: {
+                display: true,
+                text: 'Начальная скорость (км/ч)'
+              }
             }
           }
         }
-      }
-    });
+      });
+    };
   }
-
 });
