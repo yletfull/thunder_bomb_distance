@@ -6,61 +6,63 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <h1>Расчет дальности полета</h1>
-  
-  <div class="tabs">
-    <button class="tablink active" onclick="openTab('distanceTab', this)">Получить дальность по скорости/высоте</button>
-    <button class="tablink" onclick="openTab('speedAltitudeTab', this)">Получить скорость/высоту по дальности</button>
-  </div>
-
-  <label for="bombSelect">Выберите бомбу:</label>
-  <select id="bombSelect">
-    <option value="gbu-10">GBU-10</option>
-    <option value="gbu-12" selected>GBU-12</option>
-    <option value="gbu-16">GBU-16</option>
-  </select>
-  
-  <div>
-    <label for="launchAngleInput">Угол пуска (градусы) (0 - горизонт, 90 - вертикально вниз, -15 - климб вверх):</label>
-    <input type="number" required id="launchAngleInput" placeholder="Угол пуска (градусы) (0 - горизонт, 90 - вертикально вниз, -15 - климб вверх)" min="-90" max="90" value="0" required>
-  </div>
-  
-  <div id="distanceTab" class="tabcontent">
-    <label for="speedInput">Скорость (км/ч):</label>
-    <input type="number" id="speedInput" value="800" placeholder="Введите скорость" />
+  <main>
+    <h1>Расчет дальности полета</h1>
     
-    <label for="altitudeInput">Высота (метры):</label>
-    <input type="number" id="altitudeInput" placeholder="Введите высоту" value="3000"/>
-    
-    <button id="calculateBtn">Рассчитать дальность</button>
-    
-    <table id="tableOutput">
-      <thead>
-        <tr>
-          <th>Высота (метры)</th>
-          <th>Скорость (км/ч)</th>
-          <th>Дальность (метры)</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <canvas id="chart"></canvas>
-  </div>
-  
-  <div id="speedAltitudeTab" class="tabcontent">
-    <label for="distanceInput">Дистанция (метры):</label>
-    <input type="number" id="distanceInput" placeholder="Введите дистанцию" />
-  
-    <button id="calculateSpeedAltitudeBtn">Рассчитать скорость и высоту</button>
-  
-    <div id="resultOutput">
-      <div>Скорость: <span id="speedOutput"></span> км/ч</div>
-      <div>Высота: <span id="altitudeOutput"></span> метров</div>
+    <div class="tabs">
+      <button class="tablink active" onclick="openTab('distanceTab', this)">Получить дальность по скорости/высоте</button>
+      <button class="tablink" onclick="openTab('speedAltitudeTab', this)">Получить скорость/высоту по дальности</button>
     </div>
 
-    <canvas id="chartAltitude"></canvas>
-  </div>
+    <label for="bombSelect">Выберите бомбу:</label>
+    <select id="bombSelect">
+      <option value="gbu-10">GBU-10</option>
+      <option value="gbu-12" selected>GBU-12</option>
+      <option value="gbu-16">GBU-16</option>
+    </select>
+    
+    <div>
+      <label for="launchAngleInput">Угол пуска (градусы) (0 - горизонт, 90 - вертикально вниз, -15 - климб вверх):</label>
+      <input type="number" required id="launchAngleInput" placeholder="Угол пуска (градусы) (0 - горизонт, 90 - вертикально вниз, -15 - климб вверх)" min="-90" max="90" value="0" required>
+    </div>
+    
+    <div id="distanceTab" class="tabcontent">
+      <label for="speedInput">Скорость (км/ч):</label>
+      <input type="number" id="speedInput" value="800" placeholder="Введите скорость" />
+      
+      <label for="altitudeInput">Высота (метры):</label>
+      <input type="number" id="altitudeInput" placeholder="Введите высоту" value="3000"/>
+      
+      <button id="calculateBtn">Рассчитать дальность</button>
+      
+      <table id="tableOutput">
+        <thead>
+          <tr>
+            <th>Высота (метры)</th>
+            <th>Скорость (км/ч)</th>
+            <th>Дальность (метры)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <canvas id="chart"></canvas>
+    </div>
+    
+    <div id="speedAltitudeTab" class="tabcontent">
+      <label for="distanceInput">Дистанция (метры):</label>
+      <input type="number" id="distanceInput" placeholder="Введите дистанцию" />
+    
+      <button id="calculateSpeedAltitudeBtn">Рассчитать скорость и высоту</button>
+    
+      <div id="resultOutput">
+        <div>Скорость: <span id="speedOutput"></span> км/ч</div>
+        <div>Высота: <span id="altitudeOutput"></span> метров</div>
+      </div>
+
+      <canvas id="chartAltitude"></canvas>
+    </div>
+  </main>
 
   <script src="script.js"></script>
   <script src="script-distance.js"></script>

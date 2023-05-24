@@ -1,6 +1,16 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+  body {
+    background-color: #fcfcfc;
+  }
+
+  main {
+    padding: 0 20px;
+    background-color: #fffefe;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.337);
+    border-radius: 8px;
+    width: 70vw;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
   }
   
   h1 {
